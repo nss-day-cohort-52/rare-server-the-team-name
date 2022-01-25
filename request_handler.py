@@ -64,7 +64,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             #         response = f"{get_single_post(id)}"
             #     else:
             #         response = f"{get_all_posts()}"                   
-
+            if resource == "tags":
+                response = get_all_tags()
         elif len(parsed) == 3:
             ( resource, key, value ) = parsed
             

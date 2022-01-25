@@ -9,7 +9,9 @@ def get_all_tags():
         conn.row_factory = sqlite3.Row 
         db_cursor = conn.cursor()
         db_cursor.execute("""
-                          SELECT * FROM Tags
+                          SELECT 
+                          *
+                           FROM Tags
                           """)
         tags = []
         dataset = db_cursor.fetchall()
