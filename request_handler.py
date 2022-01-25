@@ -1,11 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
-<<<<<<< HEAD
 from views.post_requests import get_all_posts
-=======
 from views.tag_requests import get_all_tags
-
->>>>>>> main
 from views.user_requests import create_user, login_user
 
 
