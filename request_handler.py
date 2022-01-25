@@ -1,6 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
-from views import create_user, login_user
+from views import create_user, login_user, get_single_post, get_all_posts
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -50,27 +50,26 @@ class HandleRequests(BaseHTTPRequestHandler):
 
     def do_GET(self):
         self._set_headers(200)
-        response = {}  
+        response = {}
 
         parsed = self.parse_url()
 
         if len(parsed) == 2:
-            ( resource, id ) = parsed
-            
-            # if resource == "posts":
-            #     if id is not None:
-            #         response = f"{get_single_post(id)}"
-            #     else:
-            #         response = f"{get_all_posts()}"                   
+            (resource, id) = parsed
+
+            if resource == "posts":
+                if id is not None:
+                    response = f"{get_single_post(id)}"
+                else:
+                    response = f"{get_all_posts()}"
 
         elif len(parsed) == 3:
-            ( resource, key, value ) = parsed
-            
+            (resource, key, value) = parsed
+
             # if resource == "posts" and key == "q":
             #     response = search_posts(value)
 
         self.wfile.write(response.encode())
-
 
     def do_POST(self):
         """Make a post request to the server"""
@@ -95,10 +94,10 @@ class HandleRequests(BaseHTTPRequestHandler):
         (resource, id) = self.parse_url()
 
         success = False
-        
+
         # if resource == "posts":
         #     success = update_post(id, post_body)
-            
+
         if success:
             self._set_headers(204)
         else:
