@@ -1,6 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
-from views import create_user, login_user, get_single_post, get_all_posts
+from views import create_user, login_user, get_single_post, get_all_posts, get_all_categories, get_all_tags
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -55,13 +55,17 @@ class HandleRequests(BaseHTTPRequestHandler):
         parsed = self.parse_url()
 
         if len(parsed) == 2:
-            (resource, id) = parsed
+            ( resource, id ) = parsed
 
             if resource == "posts":
-                if id is not None:
-                    response = f"{get_single_post(id)}"
-                else:
-                    response = f"{get_all_posts()}"
+                # if id is not None:
+                #     response = f"{get_single_post(id)}"
+                # else:
+                    response = f"{get_all_posts()}"  
+            elif resource == "tags":
+                response = get_all_tags()                 
+            elif resource == "categories":
+                response = get_all_categories()                     
 
         elif len(parsed) == 3:
             (resource, key, value) = parsed
@@ -83,6 +87,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             response = login_user(post_body)
         if resource == 'register':
             response = create_user(post_body)
+        if resource == 'tags':
+            response = get_all_tags()
 
         self.wfile.write(response.encode())
 

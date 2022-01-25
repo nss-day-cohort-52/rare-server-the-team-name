@@ -24,25 +24,22 @@ def get_all_posts():
             p.approved,
             c.id category_id,
             c.label,
-            u.id,
+            u.id user_id,
             u.first_name,
             u.last_name
         FROM Posts p
-        JOIN Categories c 
+        JOIN Categories c
             ON c.id = p.category_id
         JOIN Users u
-            ON p.user_id = u.id
+        ON u.id = p.user_id
+        ORDER BY publication_date DESC
         """)
-
         # Initialize an empty list to hold all post representations
         posts = []
-
         # Convert rows of data into a Python list
         dataset = db_cursor.fetchall()
-
         # Iterate list of data returned from database
         for row in dataset:
-
             # Create an post instance from the current row.
             # Note that the database fields are specified in
             # exact order of the parameters defined in the

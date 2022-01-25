@@ -1,3 +1,6 @@
+from tkinter.messagebox import NO
+
+
 class Post():
     def __init__(self, id, user_id, category_id, title, publication_date, image_url, content, approved):
         self.id = id
