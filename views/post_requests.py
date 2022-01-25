@@ -24,7 +24,6 @@ def get_all_posts():
             p.approved,
             c.id category_id,
             c.label,
-            u.id user_id,
             u.first_name,
             u.last_name
         FROM Posts p
@@ -50,8 +49,11 @@ def get_all_posts():
 
             category = Category(row['category_id'], row['label'])
 
-            post.category = category.__dict__
+            user = User(row['user_id'], row['first_name'],
+                        row['last_name'], "", "", "", "", "", "", "")
 
+            post.category = category.__dict__
+            post.user = user.__dict__
             posts.append(post.__dict__)
 
     # Use `json` package to properly serialize list as JSON
@@ -79,7 +81,6 @@ def get_single_post(id):
             p.approved,
             c.id category_id,
             c.label,
-            u.id user_id,
             u.first_name,
             u.last_name
         FROM Posts p
@@ -102,8 +103,9 @@ def get_single_post(id):
                     row['image_url'], row['content'], row['approved'])
 
         category = Category(row['category_id'], row['label'])
-        
-        user = User(row['id'], row['first_name'], row['last_name'], "", "", "", "", "", "", "")
+
+        user = User(row['user_id'], row['first_name'],
+                    row['last_name'], "", "", "", "", "", "", "")
 
         post.user = user.__dict__
         post.category = category.__dict__
