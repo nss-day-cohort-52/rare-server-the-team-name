@@ -12,4 +12,4 @@ class User():
         self.password = password
         self.created_on = created_on
         self.active = active
-        self. profile_image_url = profile_image_url
+        self.profile_image_url = profile_image_url
