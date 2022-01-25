@@ -97,7 +97,5 @@ INSERT INTO Reactions ('label', 'image_url') VALUES ('happy', 'https://pngtree.c
 INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date', 'image_url', 'content', 'approved')
 VALUES (1, 1, 'First Post', CURRENT_DATE, 'none', 'the content', NULL)
 
-DELETE FROM Posts
-WHERE id = 2
 INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date', 'image_url', 'content', 'approved')
 VALUES (1, 1, 'Second Post', '2022-01-24', 'none', 'the content', NULL) 
