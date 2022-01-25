@@ -1,6 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from views import get_all_categories
+from views.tag_requests import get_all_tags
 
 from views.user_requests import create_user, login_user
 
@@ -67,6 +68,9 @@ class HandleRequests(BaseHTTPRequestHandler):
             if resource == "categories":
                 response = get_all_categories()                     
 
+            #         response = f"{get_all_posts()}"                   
+            if resource == "tags":
+                response = get_all_tags()
         elif len(parsed) == 3:
             ( resource, key, value ) = parsed
             
@@ -88,6 +92,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             response = login_user(post_body)
         if resource == 'register':
             response = create_user(post_body)
+        if resource == 'tags':
+            response = get_all_tags()
 
         self.wfile.write(response.encode())
 

@@ -91,5 +91,6 @@ INSERT INTO Categories ('label') VALUES ('Weather');
 
 
 INSERT INTO Tags ('label') VALUES ('JavaScript');
+INSERT INTO Tags ('label') VALUES ('C#');
 INSERT INTO Reactions ('label', 'image_url') VALUES ('happy', 'https://pngtree.com/so/happy');
 
