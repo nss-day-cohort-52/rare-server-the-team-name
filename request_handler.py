@@ -1,5 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
+from views import get_all_categories
 
 from views.user_requests import create_user, login_user
 
@@ -62,7 +63,9 @@ class HandleRequests(BaseHTTPRequestHandler):
             #     if id is not None:
             #         response = f"{get_single_post(id)}"
             #     else:
-            #         response = f"{get_all_posts()}"                   
+            #         response = f"{get_all_posts()}" 
+            if resource == "categories":
+                response = get_all_categories()                     
 
         elif len(parsed) == 3:
             ( resource, key, value ) = parsed

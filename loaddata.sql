@@ -85,5 +85,14 @@ CREATE TABLE "Categories" (
 );
 
 INSERT INTO Categories ('label') VALUES ('News');
+INSERT INTO Categories ('label') VALUES ('Sports');
+INSERT INTO Categories ('label') VALUES ('Local');
+INSERT INTO Categories ('label') VALUES ('Weather');
+
+
 INSERT INTO Tags ('label') VALUES ('JavaScript');
 INSERT INTO Reactions ('label', 'image_url') VALUES ('happy', 'https://pngtree.com/so/happy');
+
+        SELECT *
+        FROM Categories c
+        ORDER BY c.label ASC
