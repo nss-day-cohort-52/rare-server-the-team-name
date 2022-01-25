@@ -55,20 +55,16 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if len(parsed) == 2:
             ( resource, id ) = parsed
-            
             if resource == "posts":
                 # if id is not None:
                 #     response = f"{get_single_post(id)}"
                 # else:
                     response = f"{get_all_posts()}"  
             elif resource == "tags":
-                response = f"{get_all_tags()}"                 
+                response = get_all_tags()                 
             elif resource == "categories":
-                response = f"{get_all_categories()}"                     
+                response = get_all_categories()                     
 
-            #         response = f"{get_all_posts()}"                   
-            if resource == "tags":
-                response = get_all_tags()
         elif len(parsed) == 3:
             ( resource, key, value ) = parsed
             
