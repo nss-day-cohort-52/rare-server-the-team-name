@@ -1,9 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
-from views.post_requests import get_all_posts
-from views.category_requests import get_all_categories
-from views.tag_requests import get_all_tags
-from views.user_requests import create_user, login_user
+from views import create_user, login_user, get_single_post, get_all_posts, get_all_categories, get_all_tags
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -53,31 +50,30 @@ class HandleRequests(BaseHTTPRequestHandler):
 
     def do_GET(self):
         self._set_headers(200)
-        response = {}  
+        response = {}
 
         parsed = self.parse_url()
 
         if len(parsed) == 2:
-            ( resource, id ) = parsed
+            (resource, id) = parsed
 
             if resource == "posts":
-                # if id is not None:
-                #     response = f"{get_single_post(id)}"
-                # else:
-                    response = f"{get_all_posts()}"  
+                if id is not None:
+                    response = f"{get_single_post(id)}"
+                else:
+                    response = f"{get_all_posts()}"
             elif resource == "tags":
-                response = get_all_tags()                 
+                response = get_all_tags()
             elif resource == "categories":
-                response = get_all_categories()                     
+                response = get_all_categories()
 
         elif len(parsed) == 3:
-            ( resource, key, value ) = parsed
-            
+            (resource, key, value) = parsed
+
             # if resource == "posts" and key == "q":
             #     response = search_posts(value)
 
         self.wfile.write(response.encode())
-
 
     def do_POST(self):
         """Make a post request to the server"""
@@ -104,10 +100,10 @@ class HandleRequests(BaseHTTPRequestHandler):
         (resource, id) = self.parse_url()
 
         success = False
-        
+
         # if resource == "posts":
         #     success = update_post(id, post_body)
-            
+
         if success:
             self._set_headers(204)
         else:
