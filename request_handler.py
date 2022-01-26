@@ -4,6 +4,7 @@ from views import (create_category, create_tag, create_user,
                    get_all_categories, get_all_posts, get_all_tags,
                    get_all_users, get_single_post, get_tags_by_label,
                    login_user)
+from views.post_requests import create_post
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -95,6 +96,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             response = create_tag(post_body)
         if resource == 'categories':
             response = create_category(post_body)
+        if resource == 'posts':
+            response = create_post(post_body)
 
         self.wfile.write(response.encode())
 
