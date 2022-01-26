@@ -1,7 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
-from views import create_user, login_user, get_single_post, get_all_posts, get_all_categories, get_all_tags
-from views.user_requests import get_all_users
+from views import create_user, login_user, get_single_post, get_all_posts, get_all_categories, get_all_tags, create_category, get_all_users
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -56,8 +55,7 @@ class HandleRequests(BaseHTTPRequestHandler):
         parsed = self.parse_url()
 
         if len(parsed) == 2:
-            (resource, id) = parsed
-
+            ( resource, id ) = parsed
             if resource == "posts":
                 if id is not None:
                     response = f"{get_single_post(id)}"
@@ -90,7 +88,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             response = login_user(post_body)
         if resource == 'register':
             response = create_user(post_body)
-        
+        if resource == 'categories':
+            response = create_category(post_body)
 
         self.wfile.write(response.encode())
 
