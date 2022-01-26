@@ -1,6 +1,7 @@
 import sqlite3
 import json
 from datetime import datetime
+from models import User
 
 def login_user(user):
     """Checks for the user in the database
@@ -69,3 +70,24 @@ def create_user(user):
             'token': id,
             'valid': True
         })
+
+def get_all_users():
+    with sqlite3.connect("./db.sqlite3") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        SELECT *
+        FROM Users
+        ORDER BY username ASC
+        """)
+
+        users = []
+
+        dataset = db_cursor.fetchall()
+
+        for row in dataset:
+            category = User(row['id'], row['first_name'],
+                        row['last_name'], row['email'],row['bio'],row['username'], row['password'], row['created_on'], row['active'], row['profile_image_url'])
+            users.append(category.__dict__)
+    return json.dumps(users)
