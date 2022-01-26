@@ -1,9 +1,9 @@
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from views import (create_category, create_tag, create_user,
+from views import (create_category, create_tag, create_user, delete_post,
                    get_all_categories, get_all_posts, get_all_tags,
                    get_all_users, get_single_post, get_tags_by_label,
-                   login_user, update_post, create_post)
+                   login_user, update_post, create_post, get_single_user)
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -69,7 +69,11 @@ class HandleRequests(BaseHTTPRequestHandler):
             elif resource == "categories":
                 response = get_all_categories()
             elif resource == 'users':
-                response = get_all_users()
+               
+                if id is not None:
+                    response = get_single_user(id)
+                else:
+                    response = get_all_users()
 
         elif len(parsed) == 3:
             (resource, key, value) = parsed
@@ -124,8 +128,8 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         (resource, id) = self.parse_url()
 
-        # if resource == "posts":
-        #     delete_post(id)
+        if resource == "posts":
+            delete_post(id)
 
         self.wfile.write("".encode())
 
