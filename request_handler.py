@@ -1,6 +1,8 @@
-from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
-from views import create_user, login_user, get_single_post, get_all_posts, get_all_categories, get_all_tags
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from views import (create_user, get_all_categories, get_all_posts,
+                    get_all_tags, get_single_post, get_tags_by_label,
+                    login_user, create_tag)
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -70,8 +72,8 @@ class HandleRequests(BaseHTTPRequestHandler):
         elif len(parsed) == 3:
             (resource, key, value) = parsed
 
-            # if resource == "posts" and key == "q":
-            #     response = search_posts(value)
+            if resource == "tags" and key == "q":
+                response = get_tags_by_label(value)
 
         self.wfile.write(response.encode())
 
@@ -88,7 +90,7 @@ class HandleRequests(BaseHTTPRequestHandler):
         if resource == 'register':
             response = create_user(post_body)
         if resource == 'tags':
-            response = get_all_tags()
+            response = create_tag(post_body)
 
         self.wfile.write(response.encode())
 
