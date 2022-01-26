@@ -3,7 +3,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from views import (create_category, create_tag, create_user,
                    get_all_categories, get_all_posts, get_all_tags,
                    get_all_users, get_single_post, get_tags_by_label,
-                   login_user)
+                   login_user, update_post)
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -107,8 +107,8 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         success = False
 
-        # if resource == "posts":
-        #     success = update_post(id, post_body)
+        if resource == "posts":
+            success = update_post(id, post_body)
 
         if success:
             self._set_headers(204)
