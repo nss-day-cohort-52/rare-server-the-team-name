@@ -87,7 +87,7 @@ def get_all_users():
         dataset = db_cursor.fetchall()
 
         for row in dataset:
-            category = User(row['id'], row['first_name'],
+            user = User(row['id'], row['first_name'],
                         row['last_name'], row['email'],row['bio'],row['username'], row['password'], row['created_on'], row['active'], row['profile_image_url'])
-            users.append(category.__dict__)
+            users.append(user.__dict__)
     return json.dumps(users)
