@@ -1,15 +1,10 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
-<<<<<<< HEAD
-from views import create_user, login_user, get_single_post, get_all_posts, get_all_categories, get_all_tags
-<<<<<<< HEAD
-from views import create_post
-=======
-from views.user_requests import get_all_users
->>>>>>> main
-=======
+# from views import create_user, login_user, get_single_post, get_all_posts, get_all_categories, get_all_tags
+# from views import create_post
+# from views.user_requests import get_all_users
 from views import create_user, login_user, get_single_post, get_all_posts, get_all_categories, get_all_tags, create_category, get_all_users
->>>>>>> main
+
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -97,19 +92,16 @@ class HandleRequests(BaseHTTPRequestHandler):
             response = login_user(post_body)
         if resource == 'register':
             response = create_user(post_body)
-<<<<<<< HEAD
-<<<<<<< HEAD
+
         if resource == 'tags':
             response = get_all_tags()
         if resource == 'posts':
             response = create_post(post_body)
-=======
->>>>>>> main
         
-=======
+
         if resource == 'categories':
             response = create_category(post_body)
->>>>>>> main
+
 
         self.wfile.write(response.encode())
 
