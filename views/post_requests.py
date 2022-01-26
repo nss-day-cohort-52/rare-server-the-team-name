@@ -112,3 +112,12 @@ def get_single_post(id):
 
     # Use `json` package to properly serialize list as JSON
     return json.dumps(post.__dict__)
+
+def delete_post(id):
+    with sqlite3.connect("./db.sqlite3") as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        DELETE FROM Posts
+        WHERE id = ?
+        """, (id, ))
