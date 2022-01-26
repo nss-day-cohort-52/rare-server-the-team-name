@@ -4,7 +4,7 @@ from views import (create_category, create_tag, create_user, delete_post,
                    get_all_categories, get_all_posts, get_all_tags,
                    get_all_users, get_single_post, get_tags_by_label,
                    login_user, get_single_user)
-from views.post_requests import create_post, create_post_tag, get_certain_post_tags
+from views.post_requests import create_post, create_post_tag, get_certain_post_tags, get_posts_by_category
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -83,6 +83,8 @@ class HandleRequests(BaseHTTPRequestHandler):
                 response = get_tags_by_label(value)
             if resource == "posttags" and key == "post_id":
                 response = get_certain_post_tags(value)
+            if resource == "posts" and key == "category_id":
+                response = get_posts_by_category(value)
 
         self.wfile.write(response.encode())
 
