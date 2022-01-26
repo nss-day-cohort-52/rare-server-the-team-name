@@ -1,6 +1,7 @@
 import sqlite3
 import json
-from models import Post, Category, User
+from models import Post, Category, User, postTag, Tag
+
 
 
 def get_all_posts():
@@ -170,7 +171,35 @@ def get_single_post(id):
     # Use `json` package to properly serialize list as JSON
     return json.dumps(post.__dict__)
 
+
+def get_certain_post_tags(id):
+    with sqlite3.connect("./db.sqlite3") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+        db_cursor.execute("""
+                          SELECT 
+                          pt.id,
+                          pt.post_id,
+                          pt.tag_id,
+                          t.label
+                          FROM PostTags pt
+                            JOIN Tags t
+                                ON t.id = pt.tag_id
+                          WHERE post_id = ?
+                          """, (id, ))
+        newTagArray = []
+        dataset = db_cursor.fetchall()
+        for data in dataset:
+            newPostTag = postTag(data['id'], data['post_id'], data['tag_id'])
+            tag = Tag(data['tag_id'], data['label'])
+            newPostTag.tag = tag.__dict__
+            newTagArray.append(newPostTag.__dict__)
+    return json.dumps(newTagArray)
+        
+        
+
 def update_post(id, new_post):
+
     with sqlite3.connect("./db.sqlite3") as conn:
         db_cursor = conn.cursor()
 
@@ -221,3 +250,17 @@ def create_post(new_post):
         new_post['id'] = id
         
     return json.dumps(new_post)
+
+def create_post_tag(new_post_tag):
+    with sqlite3.connect("./db.sqlite3") as conn:
+        db_cursor = conn.cursor()
+        db_cursor.execute("""
+        INSERT INTO PostTags
+            (tag_id, post_id)
+        VALUES
+            ( ?, ? )
+        """, (new_post_tag['tag_id'], new_post_tag['post_id']))
+        id = db_cursor.lastrowid
+        new_post_tag['id'] = id
+        
+    return json.dumps(new_post_tag)
