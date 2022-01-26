@@ -91,3 +91,35 @@ def get_all_users():
                         row['last_name'], row['email'],row['bio'],row['username'], row['password'], row['created_on'], row['active'], row['profile_image_url'])
             users.append(user.__dict__)
     return json.dumps(users)
+
+def get_single_user(id):
+    # Open a connection to the database
+    with sqlite3.connect("./db.sqlite3") as conn:
+
+        # Just use these. It's a Black Box.
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+        # Write the SQL query to get the information you want
+        db_cursor.execute("""
+        SELECT
+            * FROM Users 
+            WHERE id = ?
+        """, (id, ))
+
+        # Convert rows of data into a Python list
+        row = db_cursor.fetchone()
+
+        # Create an post instance from the current row.
+        # Note that the database fields are specified in
+        # exact order of the parameters defined in the
+        # Post class above.
+       
+        user = User(row['id'], row['first_name'],
+                        row['last_name'], row['email'],row['bio'],row['username'], row['password'], row['created_on'], row['active'], row['profile_image_url'])
+
+        
+
+    # Use `json` package to properly serialize list as JSON
+    return json.dumps(user.__dict__)
+
