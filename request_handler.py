@@ -1,8 +1,9 @@
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from views import (create_user, get_all_categories, get_all_posts,
-                    get_all_tags, get_single_post, get_tags_by_label,
-                    login_user, create_tag)
+from views import (create_category, create_tag, create_user,
+                   get_all_categories, get_all_posts, get_all_tags,
+                   get_all_users, get_single_post, get_tags_by_label,
+                   login_user)
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -57,8 +58,7 @@ class HandleRequests(BaseHTTPRequestHandler):
         parsed = self.parse_url()
 
         if len(parsed) == 2:
-            (resource, id) = parsed
-
+            ( resource, id ) = parsed
             if resource == "posts":
                 if id is not None:
                     response = f"{get_single_post(id)}"
@@ -68,6 +68,8 @@ class HandleRequests(BaseHTTPRequestHandler):
                 response = get_all_tags()
             elif resource == "categories":
                 response = get_all_categories()
+            elif resource == 'users':
+                response = get_all_users()
 
         elif len(parsed) == 3:
             (resource, key, value) = parsed
@@ -91,6 +93,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             response = create_user(post_body)
         if resource == 'tags':
             response = create_tag(post_body)
+        if resource == 'categories':
+            response = create_category(post_body)
 
         self.wfile.write(response.encode())
 
