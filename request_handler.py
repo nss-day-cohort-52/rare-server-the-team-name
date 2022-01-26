@@ -5,8 +5,7 @@ from views import (create_category, create_tag, create_user, delete_post,
                    get_all_users, get_single_post, get_tags_by_label,
                    login_user, get_single_user, get_all_comments)
 
-from views.post_requests import create_post
-
+from views import create_post, update_post, create_post,get_posts_by_category, get_certain_post_tags, create_post_tag
 
 class HandleRequests(BaseHTTPRequestHandler):
     """Handles the requests to this server"""
@@ -84,6 +83,10 @@ class HandleRequests(BaseHTTPRequestHandler):
 
             if resource == "tags" and key == "q":
                 response = get_tags_by_label(value)
+            if resource == "posttags" and key == "post_id":
+                response = get_certain_post_tags(value)
+            if resource == "posts" and key == "category_id":
+                response = get_posts_by_category(value)
 
         self.wfile.write(response.encode())
 
@@ -105,6 +108,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             response = create_category(post_body)
         if resource == 'posts':
             response = create_post(post_body)
+        if resource == 'posttags':
+            response = create_post_tag(post_body)
 
         self.wfile.write(response.encode())
 
@@ -117,8 +122,8 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         success = False
 
-        # if resource == "posts":
-        #     success = update_post(id, post_body)
+        if resource == "posts":
+            success = update_post(id, post_body)
 
         if success:
             self._set_headers(204)
