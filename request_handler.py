@@ -6,11 +6,10 @@ from views import (create_category, create_post, create_post_tag,
                    delete_comment, delete_post, delete_post_tag,
                    get_all_categories, get_all_comments, get_all_posts,
                    get_all_subscriptions, get_all_tags, get_all_users,
-                   get_certain_post_tags, get_posts_by_author,
-                   get_posts_by_category, get_posts_by_tag, get_single_post,
-                   get_single_user, get_subs_by_follower, get_tags_by_label,
-                   login_user, update_post)
-
+                   get_certain_post_tags, get_posts_by_author, get_posts_by_category,
+                   get_single_post, get_single_user, get_tags_by_label,
+                   login_user, update_post, get_subs_by_follower,
+                   create_comment, get_posts_by_tag)
 
 class HandleRequests(BaseHTTPRequestHandler):
     """Handles the requests to this server"""
@@ -125,6 +124,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             response = create_subscription(post_body)
         if resource == 'posttags':
             response = create_post_tag(post_body)
+        elif resource == 'comments':
+            response = create_comment(post_body)
 
         self.wfile.write(response.encode())
 
