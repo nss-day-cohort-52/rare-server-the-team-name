@@ -8,7 +8,8 @@ from views import (create_category, create_post, create_post_tag,
                    get_all_subscriptions, get_all_tags, get_all_users,
                    get_certain_post_tags, get_posts_by_author, get_posts_by_category,
                    get_single_post, get_single_user, get_tags_by_label,
-                   login_user, update_post, get_all_comments, get_all_subscriptions, get_subs_by_follower)
+                   login_user, update_post, get_all_comments, get_all_subscriptions, get_subs_by_follower,
+                   create_comment)
 
 
 
@@ -124,6 +125,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             response = create_subscription(post_body)
         if resource == 'posttags':
             response = create_post_tag(post_body)
+        elif resource == 'comments':
+            response = create_comment(post_body)
 
         self.wfile.write(response.encode())
 
