@@ -84,3 +84,11 @@ def get_subs_by_follower(id):
             subscription.post = post.__dict__
             newPostArray.append(subscription.__dict__)
     return json.dumps(newPostArray)
+
+def delete_subscription(id):
+    with sqlite3.connect("./db.sqlite3") as conn:
+        db_cursor = conn.cursor()
+        db_cursor.execute("""
+        DELETE FROM Subscriptions
+        WHERE id = ?
+        """, (id, ))

@@ -1,17 +1,16 @@
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
-from views import (create_category, create_post, create_post_tag,
-                   create_subscription, create_tag, create_user,
-                   delete_comment, delete_post, delete_post_tag,
-                   get_all_categories, get_all_comments, get_all_posts,
-                   get_all_subscriptions, get_all_tags, get_all_users,
-                   get_certain_post_tags, get_posts_by_author, get_posts_by_category,
-                   get_single_post, get_single_user, get_tags_by_label,
-                   login_user, update_post, get_all_comments, get_all_subscriptions, get_subs_by_follower)
+from views import (create_category, create_comment, create_post,
+                   create_post_tag, create_subscription, create_tag,
+                   create_user, delete_comment, delete_post, delete_post_tag,
+                   delete_subscription, get_all_categories, get_all_comments,
+                   get_all_posts, get_all_subscriptions, get_all_tags,
+                   get_all_users, get_certain_post_tags, get_posts_by_author,
+                   get_posts_by_category, get_posts_by_tag, get_single_post,
+                   get_single_user, get_subs_by_follower, get_tags_by_label,
+                   login_user, update_post)
 from views.post_requests import search_posts
-
-
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -84,15 +83,15 @@ class HandleRequests(BaseHTTPRequestHandler):
             elif resource == "comments":
                 response = get_all_comments()
             elif resource == "subscriptions":
-                if id is not None:
-                    response = get_subs_by_follower(id)
-                else:
-                    response = get_all_subscriptions()
+                # if id is not None:
+                    
+                # else:
+                response = get_all_subscriptions()
 
         elif len(parsed) == 3:
             (resource, key, value) = parsed
 
-            if resource == "tags" and key == "label_id":
+            if resource == "tags" and key == "q":
                 response = get_tags_by_label(value)
             elif resource == "posttags" and key == "post_id":
                 response = get_certain_post_tags(value)
@@ -102,6 +101,10 @@ class HandleRequests(BaseHTTPRequestHandler):
                 response = get_posts_by_author(value)
             elif resource == "posts":
                 response = search_posts(value)
+            elif resource == "subscriptions" and key == "follower_id":
+                response = get_subs_by_follower(value)
+            elif resource == "posts" and key == "tag_id":
+                response = get_posts_by_tag(value)
 
         self.wfile.write(response.encode())
 
@@ -127,6 +130,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             response = create_subscription(post_body)
         if resource == 'posttags':
             response = create_post_tag(post_body)
+        elif resource == 'comments':
+            response = create_comment(post_body)
 
         self.wfile.write(response.encode())
 
@@ -160,6 +165,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             delete_post_tag(id)
         if resource == "comments":
             delete_comment(id)
+        if resource == "subscriptions":
+            delete_subscription(id)
 
         self.wfile.write("".encode())
 
