@@ -97,7 +97,7 @@ INSERT INTO Tags ('label') VALUES ('C#');
 INSERT INTO Reactions ('label', 'image_url') VALUES ('happy', 'https://pngtree.com/so/happy');
 
 INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date', 'image_url', 'content', 'approved')
-VALUES (1, 1, 'First Post', CURRENT_DATE, 'none', 'the content', NULL);
+VALUES (2, 1, 'First Post', CURRENT_DATE, 'none', 'the content', NULL);
 
 INSERT INTO Posts ('user_id', 'category_id', 'title', 'publication_date', 'image_url', 'content', 'approved')
 VALUES (1, 1, 'Second Post', '2022-01-24', 'none', 'the content', NULL); 
@@ -111,5 +111,4 @@ VALUES (2, 1, 'test comment 3');
 
 
 DELETE FROM PostTags where post_id = 0 
-
 
