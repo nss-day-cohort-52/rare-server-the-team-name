@@ -2,6 +2,7 @@ import json
 import sqlite3
 from models import Tag, postTag
 
+
 def get_certain_post_tags(id):
     with sqlite3.connect("./db.sqlite3") as conn:
         conn.row_factory = sqlite3.Row
@@ -25,5 +26,12 @@ def get_certain_post_tags(id):
             newPostTag.tag = tag.__dict__
             newTagArray.append(newPostTag.__dict__)
     return json.dumps(newTagArray)
-        
-    
+
+
+def delete_post_tag(id):
+    with sqlite3.connect("./db.sqlite3") as conn:
+        db_cursor = conn.cursor()
+        db_cursor.execute("""
+        DELETE FROM PostTags
+        WHERE id = ?
+        """, (id, ))
