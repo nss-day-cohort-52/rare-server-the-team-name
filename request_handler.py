@@ -10,6 +10,7 @@ from views import (create_category, create_comment, create_post,
                    get_posts_by_category, get_posts_by_tag, get_single_post,
                    get_single_user, get_subs_by_follower, get_tags_by_label,
                    login_user, update_post)
+from views.post_requests import search_posts
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -98,6 +99,8 @@ class HandleRequests(BaseHTTPRequestHandler):
                 response = get_posts_by_category(value)
             elif resource == "posts" and key == "user_id":
                 response = get_posts_by_author(value)
+            elif resource == "posts":
+                response = search_posts(value)
             elif resource == "subscriptions" and key == "follower_id":
                 response = get_subs_by_follower(value)
             elif resource == "posts" and key == "tag_id":

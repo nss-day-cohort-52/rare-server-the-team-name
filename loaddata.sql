@@ -112,22 +112,3 @@ VALUES (2, 1, 'test comment 3');
 
 DELETE FROM PostTags where post_id = 0 
 
-SELECT 
-        s.id,
-        s.follower_id,
-        s.author_id,
-        u.id,
-        p.id,
-        p.user_id,
-        p.category_id,
-        p.title,
-        p.publication_date,
-        p.image_url,
-        p.content,
-        p.approved
-      FROM Subscriptions s
-        JOIN Users u
-            ON u.id = s.author_id
-        JOIN Posts p
-            ON p.user_id = s.author_id
-        WHERE s.follower_id = 1

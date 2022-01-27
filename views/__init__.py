@@ -3,7 +3,7 @@ from .comment_requests import create_comment, delete_comment, get_all_comments
 from .post_requests import (create_post, create_post_tag, delete_post,
                             get_all_posts, get_posts_by_author,
                             get_posts_by_category, get_posts_by_tag,
-                            get_single_post, update_post)
+                            get_single_post, update_post, search_posts)
 from .post_tag_requests import delete_post_tag, get_certain_post_tags
 from .subscription_requests import (create_subscription, delete_subscription,
                                     get_all_subscriptions,

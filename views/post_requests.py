@@ -284,6 +284,49 @@ def get_posts_by_author(user_id):
 
     return json.dumps(posts)
 
+def search_posts(searchTerms):
+    with sqlite3.connect("./db.sqlite3") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+        
+        db_cursor.execute("""
+        SELECT
+            p.id,
+            p.user_id,
+            p.category_id,
+            p.title,
+            p.publication_date,
+            p.image_url,
+            p.content,
+            p.approved,
+            c.id category_id,
+            c.label,
+            u.first_name,
+            u.last_name
+        FROM Posts p
+        JOIN Categories c
+            ON c.id = p.category_id
+        JOIN Users u
+        ON u.id = p.user_id
+        WHERE p.title LIKE ?;
+        """, (f"%{searchTerms}%", ))
+        
+        posts = []
+        dataset = db_cursor.fetchall()
+        for row in dataset:
+            post = Post(row['id'], row['user_id'],
+                        row['category_id'], row['title'], row['publication_date'],
+                        row['image_url'], row['content'], row['approved'])
+            category = Category(row['category_id'], row['label'])
+            user = User(row['user_id'], row['first_name'],
+                        row['last_name'], "", "", "", "", "", "", "")
+            post.category = category.__dict__
+            post.user = user.__dict__
+
+            posts.append(post.__dict__)
+        return json.dumps(posts)
+
+        
 def get_posts_by_tag(tag_id):
     with sqlite3.connect("./db.sqlite3") as conn:
         conn.row_factory = sqlite3.Row
@@ -323,6 +366,7 @@ def get_posts_by_tag(tag_id):
             post = Post(row['id'], row['user_id'],
                         row['category_id'], row['title'], row['publication_date'],
                         row['image_url'], row['content'], row['approved'])
+            
             category = Category(row['category_id'], row['label'])
             user = User(row['user_id'], row['first_name'],
                         row['last_name'], "", "", "", "", "", "", "")
