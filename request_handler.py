@@ -7,6 +7,7 @@ from views import (create_category, create_post, create_post_tag,
                    get_all_users, get_certain_post_tags, get_posts_by_category,
                    get_single_post, get_single_user, get_tags_by_label,
                    login_user, update_post, get_all_comments, get_all_subscriptions)
+from views.subscription_requests import get_subs_by_follower
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -79,7 +80,10 @@ class HandleRequests(BaseHTTPRequestHandler):
             elif resource == "comments":
                 response = get_all_comments()
             elif resource == "subscriptions":
-                response = get_all_subscriptions()
+                if id is not None:
+                    response = get_subs_by_follower(id)
+                else:
+                    response = get_all_subscriptions()
 
         elif len(parsed) == 3:
             (resource, key, value) = parsed
@@ -90,6 +94,8 @@ class HandleRequests(BaseHTTPRequestHandler):
                 response = get_certain_post_tags(value)
             elif resource == "posts" and key == "category_id":
                 response = get_posts_by_category(value)
+            elif resource == "subscriptions" and key == "follower_id":
+                response = get_subs_by_follower(value)
 
         self.wfile.write(response.encode())
 
