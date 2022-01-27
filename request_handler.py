@@ -1,11 +1,14 @@
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from views import (create_category, create_tag, create_user, delete_post,
+
+from views import (create_category, create_post, create_post_tag,
+                   create_subscription, create_tag, create_user, delete_post,
                    get_all_categories, get_all_posts, get_all_tags,
                    get_all_users, get_single_post, get_tags_by_label,
-                   login_user, get_single_user, get_all_comments,delete_comment)
+                   login_user, get_single_user, get_all_comments, delete_comment,
+                   get_certain_post_tags, get_posts_by_category,
+                   update_post, get_all_subscriptions)
 
-from views import create_post, update_post, create_post,get_posts_by_category, get_certain_post_tags, create_post_tag
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -63,30 +66,31 @@ class HandleRequests(BaseHTTPRequestHandler):
             ( resource, id ) = parsed
             if resource == "posts":
                 if id is not None:
-                    response = f"{get_single_post(id)}"
+                    response = get_single_post(id)
                 else:
-                    response = f"{get_all_posts()}"
+                    response = get_all_posts()
             elif resource == "tags":
                 response = get_all_tags()
             elif resource == "categories":
                 response = get_all_categories()
             elif resource == 'users':
-               
                 if id is not None:
                     response = get_single_user(id)
                 else:
                     response = get_all_users()
             elif resource == "comments":
                 response = get_all_comments()
+            elif resource == "subscriptions":
+                response = get_all_subscriptions()
 
         elif len(parsed) == 3:
             (resource, key, value) = parsed
 
-            if resource == "tags" and key == "q":
+            if resource == "tags" and key == "label_id":
                 response = get_tags_by_label(value)
-            if resource == "posttags" and key == "post_id":
+            elif resource == "posttags" and key == "post_id":
                 response = get_certain_post_tags(value)
-            if resource == "posts" and key == "category_id":
+            elif resource == "posts" and key == "category_id":
                 response = get_posts_by_category(value)
 
         self.wfile.write(response.encode())
@@ -109,6 +113,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             response = create_category(post_body)
         if resource == 'posts':
             response = create_post(post_body)
+        elif resource == 'subscriptions':
+            response = create_subscription(post_body)
         if resource == 'posttags':
             response = create_post_tag(post_body)
 
