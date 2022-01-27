@@ -109,30 +109,6 @@ VALUES (1, 2, 'test comment 2');
 INSERT INTO Comments ('post_id', 'author_id', 'content')
 VALUES (2, 1, 'test comment 3');
 
-            SELECT 
-                c.id,
-                c.post_id,
-                c.author_id,
-                c.content,
-                u.id user_id,
-                u.first_name,
-                u.last_name,
-                u.email,
-                u.bio,
-                u.username,
-                u.password,
-                u.profile_image_url,
-                u.created_on,
-                u.active
-            FROM Comments c
-            JOIN Users u
-                on c.author_id = u.id 
-
-
-
-
-
-
 
 DELETE FROM PostTags where post_id = 0 
 
