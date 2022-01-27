@@ -39,19 +39,11 @@ def get_all_comments():
             comments.append(comment.__dict__)
     return json.dumps(comments)
 
-            # SELECT 
-            #     c.id,
-            #     c.post_id,
-            #     c.author_id,
-            #     c.content,
-            #     p.id post,
-            #     p.user_id,
-            #     p.category_id,
-            #     p.title,
-            #     p.publication_date,
-            #     p.image_url,
-            #     p.content,
-            #     p.approved 
-            # FROM Comments c
-            # JOIN Posts p
-            #     ON p.id = c.post_id
+def delete_comment(id):
+    with sqlite3.connect("./db.sqlite3") as conn:
+        db_cursor = conn.cursor()
+        
+        db_cursor.execute("""
+        DELETE FROM Comments
+        WHERE id = ?
+        """, (id, ))

@@ -1,5 +1,6 @@
 from .category_requests import create_category, get_all_categories
-from .comment_requests import get_all_comments
+from .comment_requests import delete_comment, get_all_comments
+from. subscription_requests import create_subscription, get_all_subscriptions
 from .post_requests import (create_post, create_post_tag, delete_post,
                             get_all_posts, get_posts_by_category,
                             get_single_post, update_post)
