@@ -6,8 +6,7 @@ from views import (create_category, create_post, create_post_tag,
                    get_all_categories, get_all_posts, get_all_tags,
                    get_all_users, get_certain_post_tags, get_posts_by_category,
                    get_single_post, get_single_user, get_tags_by_label,
-                   login_user, update_post)
-
+                   login_user, update_post, get_all_comments)
 
 class HandleRequests(BaseHTTPRequestHandler):
     """Handles the requests to this server"""
@@ -76,6 +75,8 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = get_single_user(id)
                 else:
                     response = get_all_users()
+            elif resource == "comments":
+                response = get_all_comments()
 
         elif len(parsed) == 3:
             (resource, key, value) = parsed
