@@ -110,5 +110,3 @@ INSERT INTO Comments ('post_id', 'author_id', 'content')
 VALUES (2, 1, 'test comment 3');
 
 
-DELETE FROM PostTags where post_id = 0 
-

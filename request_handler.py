@@ -99,7 +99,7 @@ class HandleRequests(BaseHTTPRequestHandler):
                 response = get_posts_by_category(value)
             elif resource == "posts" and key == "user_id":
                 response = get_posts_by_author(value)
-            elif resource == "posts":
+            elif resource == "posts" and key =="q":
                 response = search_posts(value)
             elif resource == "subscriptions" and key == "follower_id":
                 response = get_subs_by_follower(value)
