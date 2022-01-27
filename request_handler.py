@@ -146,13 +146,10 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == "posts":
             delete_post(id)
-<<<<<<< HEAD
         if resource == "posttags":
             delete_post_tag(id)
-=======
         if resource == "comments":
             delete_comment(id)
->>>>>>> main
 
         self.wfile.write("".encode())
 
