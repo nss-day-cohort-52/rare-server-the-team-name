@@ -6,11 +6,10 @@ from views import (create_category, create_post, create_post_tag,
                    delete_comment, delete_post, delete_post_tag,
                    get_all_categories, get_all_comments, get_all_posts,
                    get_all_subscriptions, get_all_tags, get_all_users,
-                   get_certain_post_tags, get_posts_by_author, get_posts_by_category,
-                   get_single_post, get_single_user, get_tags_by_label,
-                   login_user, update_post, get_all_comments, get_all_subscriptions, get_subs_by_follower)
-
-
+                   get_certain_post_tags, get_posts_by_author,
+                   get_posts_by_category, get_posts_by_tag, get_single_post,
+                   get_single_user, get_subs_by_follower, get_tags_by_label,
+                   login_user, update_post)
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -99,6 +98,8 @@ class HandleRequests(BaseHTTPRequestHandler):
                 response = get_posts_by_category(value)
             elif resource == "posts" and key == "user_id":
                 response = get_posts_by_author(value)
+            elif resource == "posts" and key == "tag_id":
+                response = get_posts_by_tag(value)
 
         self.wfile.write(response.encode())
 
