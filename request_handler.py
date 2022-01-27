@@ -72,7 +72,6 @@ class HandleRequests(BaseHTTPRequestHandler):
             elif resource == "categories":
                 response = get_all_categories()
             elif resource == 'users':
-               
                 if id is not None:
                     response = get_single_user(id)
                 else:
@@ -81,11 +80,11 @@ class HandleRequests(BaseHTTPRequestHandler):
         elif len(parsed) == 3:
             (resource, key, value) = parsed
 
-            if resource == "tags" and key == "q":
+            if resource == "tags" and key == "label_id":
                 response = get_tags_by_label(value)
-            if resource == "posttags" and key == "post_id":
+            elif resource == "posttags" and key == "post_id":
                 response = get_certain_post_tags(value)
-            if resource == "posts" and key == "category_id":
+            elif resource == "posts" and key == "category_id":
                 response = get_posts_by_category(value)
 
         self.wfile.write(response.encode())
