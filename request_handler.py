@@ -2,13 +2,12 @@ import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 from views import (create_category, create_post, create_post_tag,
-                   create_subscription, create_tag, create_user, delete_post,
-                   get_all_categories, get_all_posts, get_all_tags,
-                   get_all_users, get_single_post, get_tags_by_label,
-                   login_user, get_single_user, get_all_comments, delete_comment,
-                   get_certain_post_tags, get_posts_by_category,
-                   update_post, get_all_subscriptions)
-
+                   create_subscription, create_tag, create_user,
+                   delete_comment, delete_post, get_all_categories,
+                   get_all_comments, get_all_posts, get_all_subscriptions,
+                   get_all_tags, get_all_users, get_certain_post_tags,
+                   get_posts_by_author, get_posts_by_category, get_single_post,
+                   get_single_user, get_tags_by_label, login_user, update_post)
 
 
 class HandleRequests(BaseHTTPRequestHandler):
