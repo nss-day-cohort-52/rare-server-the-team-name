@@ -298,8 +298,16 @@ def search_posts(searchTerms):
             p.publication_date,
             p.image_url,
             p.content,
-            p.approved
+            p.approved,
+            c.id category_id,
+            c.label,
+            u.first_name,
+            u.last_name
         FROM Posts p
+        JOIN Categories c
+            ON c.id = p.category_id
+        JOIN Users u
+        ON u.id = p.user_id
         WHERE p.title LIKE ?;
         """, (f"%{searchTerms}%", ))
         
@@ -309,6 +317,11 @@ def search_posts(searchTerms):
             post = Post(row['id'], row['user_id'],
                         row['category_id'], row['title'], row['publication_date'],
                         row['image_url'], row['content'], row['approved'])
+            category = Category(row['category_id'], row['label'])
+            user = User(row['user_id'], row['first_name'],
+                        row['last_name'], "", "", "", "", "", "", "")
+            post.category = category.__dict__
+            post.user = user.__dict__
 
             posts.append(post.__dict__)
         return json.dumps(posts)
