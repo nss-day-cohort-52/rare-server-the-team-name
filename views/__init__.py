@@ -2,7 +2,7 @@ from .category_requests import create_category, get_all_categories
 from .comment_requests import delete_comment, get_all_comments, create_comment
 from .post_requests import (create_post, create_post_tag, delete_post,
                             get_all_posts, get_posts_by_author,
-                            get_posts_by_category, get_single_post,
+                            get_posts_by_category, get_posts_by_tag, get_single_post,
                             update_post)
 from .post_tag_requests import delete_post_tag, get_certain_post_tags
 from .subscription_requests import create_subscription, get_all_subscriptions, get_subs_by_follower
