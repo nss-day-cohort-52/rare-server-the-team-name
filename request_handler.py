@@ -91,7 +91,7 @@ class HandleRequests(BaseHTTPRequestHandler):
         elif len(parsed) == 3:
             (resource, key, value) = parsed
 
-            if resource == "tags" and key == "label_id":
+            if resource == "tags" and key == "q":
                 response = get_tags_by_label(value)
             elif resource == "posttags" and key == "post_id":
                 response = get_certain_post_tags(value)

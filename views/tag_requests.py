@@ -36,9 +36,9 @@ def get_tags_by_label(searchString):
 
         dataset = db_cursor.fetchall()
 
-    for row in dataset:
-        tag = Tag(row['id'], row['label'])
-        tags.append(tag.__dict__)
+        for row in dataset:
+            tag = Tag(row['id'], row['label'])
+            tags.append(tag.__dict__)
 
     return json.dumps(tags)
 
