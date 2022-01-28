@@ -2,15 +2,15 @@ import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 from views import (create_category, create_comment, create_post,
-                   create_post_tag, create_subscription, create_tag,
-                   create_user, delete_comment, delete_post, delete_post_tag,
-                   delete_subscription, delete_tag, get_all_categories,
-                   get_all_comments, get_all_posts, get_all_subscriptions,
-                   get_all_tags, get_all_users, get_certain_post_tags,
-                   get_posts_by_author, get_posts_by_category,
-                   get_posts_by_tag, get_single_post, get_single_user,
-                   get_subs_by_follower, get_tags_by_label, login_user,
-                   update_post, update_tag)
+                    create_post_tag, create_subscription, create_tag,
+                    create_user, delete_category, delete_comment, delete_post,
+                    delete_post_tag, delete_subscription, delete_tag,
+                    get_all_categories, get_all_comments, get_all_posts,
+                    get_all_subscriptions, get_all_tags, get_all_users,
+                    get_certain_post_tags, get_posts_by_author,
+                    get_posts_by_category, get_posts_by_tag, get_single_post,
+                    get_single_user, get_subs_by_follower, get_tags_by_label,
+                    login_user, update_category, update_post, update_tag)
 from views.post_requests import search_posts
 
 
@@ -149,6 +149,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             success = update_post(id, post_body)
         if resource == "tags":
             success = update_tag(id, post_body)
+        if resource == "categories":
+            success = update_category(id, post_body)
 
         if success:
             self._set_headers(204)
@@ -172,6 +174,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             delete_subscription(id)
         if resource == "tags":
             delete_tag(id)
+        if resource == "categories":
+            delete_category(id)
 
         self.wfile.write("".encode())
 
