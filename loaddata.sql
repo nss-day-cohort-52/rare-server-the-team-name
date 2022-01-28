@@ -88,8 +88,11 @@ INSERT INTO Categories ('label') VALUES ('News');
 INSERT INTO Categories ('label') VALUES ('Sports');
 INSERT INTO Categories ('label') VALUES ('Local');
 INSERT INTO Categories ('label') VALUES ('Weather');
+INSERT INTO Categories ('label') VALUES ('Arts');
 
 DROP TABLE Tags
+
+DROP TABLE Categories
 
 INSERT INTO Tags ('label') VALUES ('JavaScript');
 INSERT INTO Tags ('label') VALUES ('C#');

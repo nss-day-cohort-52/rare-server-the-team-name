@@ -46,3 +46,33 @@ def create_category(new_category):
 
 
     return json.dumps(new_category)
+
+def delete_category(id):
+    with sqlite3.connect("./db.sqlite3") as conn:
+        db_cursor = conn.cursor()
+        db_cursor.execute("""
+        DELETE FROM Categories
+        WHERE id = ?
+        """, (id, ))
+
+
+def update_category(id, new_category):
+    with sqlite3.connect("./db.sqlite3") as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        UPDATE Categories
+            SET label = ?
+        WHERE id = ?
+        """, (new_category['label'], id, ))
+
+        # Were any rows affected?
+        # Did the client send an `id` that exists?
+        rows_affected = db_cursor.rowcount
+
+    if rows_affected == 0:
+        # Forces 404 response by main module
+        return False
+    else:
+        # Forces 204 response by main module
+        return True
