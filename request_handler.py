@@ -8,7 +8,7 @@ from views import (create_category, create_comment, create_post,
                    get_all_comments, get_all_posts, get_all_subscriptions,
                    get_all_tags, get_all_users, get_certain_post_tags,
                    get_posts_by_author, get_posts_by_category,
-                   get_posts_by_tag, get_single_post, get_single_user,
+                   get_posts_by_tag, get_single_post, get_single_user,get_subs_by_author,
                    get_subs_by_follower, get_tags_by_label, login_user,
                    update_post, update_tag)
 from views.post_requests import search_posts
@@ -106,6 +106,8 @@ class HandleRequests(BaseHTTPRequestHandler):
                 response = get_subs_by_follower(value)
             elif resource == "posts" and key == "tag_id":
                 response = get_posts_by_tag(value)
+            elif resource == "subscriptions" and key == "author_id":
+                response = get_subs_by_author(value)
 
         self.wfile.write(response.encode())
 

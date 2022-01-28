@@ -92,3 +92,22 @@ def delete_subscription(id):
         DELETE FROM Subscriptions
         WHERE id = ?
         """, (id, ))
+        
+def get_subs_by_author(id):
+    with sqlite3.connect("./db.sqlite3") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+        db_cursor.execute("""
+                          SELECT 
+                            s.id,
+                            s.follower_id,
+                            s.author_id
+                            FROM Subscriptions s
+                          WHERE s.author_id = ?
+                          """, (id, ))
+        subscriberCount = []
+        dataset = db_cursor.fetchall()
+        for data in dataset:
+            subscription = Subscription(data['id'], data['follower_id'], data['author_id'], "")
+            subscriberCount.append(subscription.__dict__)
+    return json.dumps(subscriberCount)
